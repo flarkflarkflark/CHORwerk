@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FactoryPresets>
+
+  <Preset name="Init" category="Subtle" author="flarkAUDIO" description="Default starting point">
+    <Params voices="4" minRate="1.0" rateRange="2.0" rateUpdate="10.0"
+            minDelay="2.0" delayRange="5.0" stereoMode="0"
+            mix="50.0" feedback="0.0" rotation="0.0" pregain="0.0" postgain="0.0"
+            lowpass="100.0" lpRes="0.0" highpass="0.0" hpRes="0.0"
+            followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0"
+            lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0"
+            lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0"
+            seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50"
+            seqStep="1.0" seqUnit="0" seqQuant="0"
+            seqLP="0.0" seqHP="0.0" seqDelay="0.0"
+            updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Warm Detune" category="Subtle" author="flarkAUDIO" description="Gentle doubling with slight pitch variation">
+    <Params voices="2" minRate="0.5" rateRange="0.3" rateUpdate="100.0" minDelay="1.0" delayRange="1.5" stereoMode="2" mix="50.0" feedback="0.0" rotation="0.0" pregain="0.0" postgain="0.0" lowpass="80.0" lpRes="0.0" highpass="0.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Slow Drift" category="Subtle" author="flarkAUDIO" description="Glacially slow modulation for pads">
+    <Params voices="4" minRate="0.1" rateRange="0.2" rateUpdate="80.0" minDelay="3.0" delayRange="6.0" stereoMode="0" mix="40.0" feedback="10.0" rotation="0.3" pregain="0.0" postgain="0.0" lowpass="100.0" lpRes="0.0" highpass="0.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="0.05" lfoUnit="2" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="1.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Silk Thread" category="Subtle" author="flarkAUDIO" description="Ultra-clean thickening, minimal movement">
+    <Params voices="2" minRate="0.3" rateRange="0.1" rateUpdate="50.0" minDelay="0.8" delayRange="0.5" stereoMode="1" mix="35.0" feedback="0.0" rotation="0.0" pregain="0.0" postgain="0.0" lowpass="70.0" lpRes="0.0" highpass="5.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Lush Chorus" category="Chorus" author="flarkAUDIO" description="Rich, classic chorus with wide stereo spread">
+    <Params voices="6" minRate="0.8" rateRange="3.0" rateUpdate="15.0" minDelay="3.0" delayRange="8.0" stereoMode="0" mix="55.0" feedback="10.0" rotation="0.25" pregain="0.0" postgain="0.0" lowpass="85.0" lpRes="5.0" highpass="5.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Vintage Rotary" category="Chorus" author="flarkAUDIO" description="Leslie-style rotary speaker simulation">
+    <Params voices="2" minRate="5.0" rateRange="1.0" rateUpdate="50.0" minDelay="1.5" delayRange="2.0" stereoMode="3" mix="60.0" feedback="5.0" rotation="0.5" pregain="0.0" postgain="0.0" lowpass="70.0" lpRes="10.0" highpass="10.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="5.5" lfoUnit="0" lfoQuant="0" lfoLP="0.5" lfoHP="0.0" lfoDelay="1.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Tape Wobble" category="Chorus" author="flarkAUDIO" description="Warm, imperfect tape machine chorus">
+    <Params voices="3" minRate="1.5" rateRange="4.0" rateUpdate="8.0" minDelay="4.0" delayRange="6.0" stereoMode="0" mix="45.0" feedback="8.0" rotation="0.15" pregain="0.0" postgain="0.0" lowpass="65.0" lpRes="8.0" highpass="8.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="4" lfoRate="2.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="2.5" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Wide Ensemble" category="Ensemble" author="flarkAUDIO" description="Full 8-voice string ensemble effect">
+    <Params voices="8" minRate="0.5" rateRange="4.0" rateUpdate="20.0" minDelay="4.0" delayRange="10.0" stereoMode="0" mix="45.0" feedback="15.0" rotation="0.5" pregain="0.0" postgain="0.0" lowpass="90.0" lpRes="0.0" highpass="3.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Shimmer Pad" category="Ensemble" author="flarkAUDIO" description="Ethereal shimmer with LFO-modulated filters">
+    <Params voices="6" minRate="0.3" rateRange="1.5" rateUpdate="30.0" minDelay="5.0" delayRange="12.0" stereoMode="0" mix="40.0" feedback="25.0" rotation="0.3" pregain="0.0" postgain="0.0" lowpass="75.0" lpRes="15.0" highpass="15.0" hpRes="5.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="0.2" lfoUnit="2" lfoQuant="0" lfoLP="1.5" lfoHP="0.0" lfoDelay="3.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Deep Space" category="Ensemble" author="flarkAUDIO" description="Vast, slowly evolving ambient texture">
+    <Params voices="8" minRate="0.2" rateRange="0.5" rateUpdate="50.0" minDelay="8.0" delayRange="15.0" stereoMode="0" mix="35.0" feedback="35.0" rotation="0.4" pregain="0.0" postgain="-3.0" lowpass="65.0" lpRes="10.0" highpass="5.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="5" lfoRate="0.1" lfoUnit="2" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="5.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Broken Tape" category="Creative" author="flarkAUDIO" description="Lo-fi warble with collision re-triggering">
+    <Params voices="3" minRate="2.0" rateRange="8.0" rateUpdate="5.0" minDelay="6.0" delayRange="15.0" stereoMode="0" mix="50.0" feedback="20.0" rotation="0.0" pregain="0.0" postgain="0.0" lowpass="60.0" lpRes="20.0" highpass="8.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="1"/>
+  </Preset>
+
+  <Preset name="Metallic Flutter" category="Creative" author="flarkAUDIO" description="Fast, resonant modulation for metallic textures">
+    <Params voices="4" minRate="8.0" rateRange="12.0" rateUpdate="3.0" minDelay="0.5" delayRange="1.0" stereoMode="0" mix="45.0" feedback="30.0" rotation="0.2" pregain="0.0" postgain="0.0" lowpass="95.0" lpRes="25.0" highpass="20.0" hpRes="15.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Dark Swirl" category="Creative" author="flarkAUDIO" description="Moody, envelope-reactive chorus with LFO filter sweep">
+    <Params voices="6" minRate="1.5" rateRange="5.0" rateUpdate="12.0" minDelay="4.0" delayRange="10.0" stereoMode="0" mix="55.0" feedback="20.0" rotation="0.6" pregain="0.0" postgain="0.0" lowpass="50.0" lpRes="30.0" highpass="10.0" hpRes="10.0" followLevel="2" envLP="1.5" envHP="0.0" envDelay="2.0" lfoShape="2" lfoRate="0.5" lfoUnit="2" lfoQuant="0" lfoLP="2.0" lfoHP="1.0" lfoDelay="4.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Underwater" category="Creative" author="flarkAUDIO" description="Submerged, heavily filtered modulation">
+    <Params voices="5" minRate="0.4" rateRange="2.0" rateUpdate="25.0" minDelay="6.0" delayRange="12.0" stereoMode="0" mix="60.0" feedback="30.0" rotation="0.35" pregain="0.0" postgain="-2.0" lowpass="40.0" lpRes="35.0" highpass="3.0" hpRes="0.0" followLevel="1" envLP="2.0" envHP="0.0" envDelay="3.0" lfoShape="5" lfoRate="0.3" lfoUnit="2" lfoQuant="0" lfoLP="1.5" lfoHP="0.0" lfoDelay="4.0" seq0="50" seq1="50" seq2="50" seq3="50" seq4="50" seq5="50" seq6="50" seq7="50" seqStep="1.0" seqUnit="0" seqQuant="0" seqLP="0.0" seqHP="0.0" seqDelay="0.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Seq Pump" category="Rhythmic" author="flarkAUDIO" description="Sequencer-driven rhythmic chorus">
+    <Params voices="4" minRate="1.0" rateRange="2.0" rateUpdate="10.0" minDelay="3.0" delayRange="5.0" stereoMode="0" mix="50.0" feedback="15.0" rotation="0.25" pregain="0.0" postgain="0.0" lowpass="85.0" lpRes="10.0" highpass="5.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="0" lfoRate="1.0" lfoUnit="0" lfoQuant="0" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="90" seq1="30" seq2="70" seq3="10" seq4="80" seq5="20" seq6="60" seq7="40" seqStep="4.0" seqUnit="4" seqQuant="1" seqLP="1.0" seqHP="0.0" seqDelay="5.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Stutter Gate" category="Rhythmic" author="flarkAUDIO" description="Sharp on/off sequencer pattern">
+    <Params voices="4" minRate="1.0" rateRange="2.0" rateUpdate="10.0" minDelay="2.0" delayRange="4.0" stereoMode="0" mix="55.0" feedback="10.0" rotation="0.2" pregain="0.0" postgain="0.0" lowpass="90.0" lpRes="5.0" highpass="3.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="3" lfoRate="2.0" lfoUnit="5" lfoQuant="1" lfoLP="0.0" lfoHP="0.0" lfoDelay="0.0" seq0="100" seq1="0" seq2="100" seq3="0" seq4="100" seq5="100" seq6="0" seq7="50" seqStep="2.0" seqUnit="4" seqQuant="1" seqLP="0.0" seqHP="0.0" seqDelay="8.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+  <Preset name="Triplet Bounce" category="Rhythmic" author="flarkAUDIO" description="Synced to triplet grid with filter movement">
+    <Params voices="3" minRate="0.8" rateRange="1.5" rateUpdate="15.0" minDelay="2.5" delayRange="5.0" stereoMode="0" mix="48.0" feedback="12.0" rotation="0.3" pregain="0.0" postgain="0.0" lowpass="80.0" lpRes="15.0" highpass="8.0" hpRes="0.0" followLevel="0" envLP="0.0" envHP="0.0" envDelay="0.0" lfoShape="2" lfoRate="1.0" lfoUnit="8" lfoQuant="1" lfoLP="1.0" lfoHP="0.5" lfoDelay="2.0" seq0="80" seq1="40" seq2="90" seq3="30" seq4="70" seq5="50" seq6="85" seq7="35" seqStep="1.0" seqUnit="7" seqQuant="1" seqLP="0.5" seqHP="0.0" seqDelay="3.0" updateUnit="0" updateQuantize="0" updateOnCollision="0"/>
+  </Preset>
+
+</FactoryPresets>

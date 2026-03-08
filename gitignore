@@ -1,0 +1,31 @@
+# Build
+build/
+cmake-build-*/
+out/
+
+# JUCE
+JuceLibraryCode/
+Builds/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiled
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.vst3
+*.clap
+*.component
