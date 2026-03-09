@@ -59,9 +59,11 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path dist
-          Get-ChildItem -Path build -Filter "*.vst3" -Recurse | Copy-Item -Destination dist -Recurse
-          Get-ChildItem -Path build -Filter "*.clap" -Recurse | Copy-Item -Destination dist -Recurse
-          Get-ChildItem -Path build -Filter "*.exe" -Recurse | Copy-Item -Destination dist
+          Get-ChildItem -Path build -Include "*.vst3","*.clap","*.exe" -Recurse | ForEach-Object {
+              $dest = Join-Path "dist" $_.Name
+              if (Test-Path $dest) { Remove-Item -Path $dest -Recurse -Force }
+              Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
+          }
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
