@@ -1,9 +1,9 @@
-# Charsiesis v2 — DSP Architecture Analysis
+# CHORwerk v2 — DSP Architecture Analysis
 
-## Reverse-Engineered from Charsiesis.dll (2006, Jakob Katz)
+## Reverse-Engineered from CHORwerk.dll (2006, Jakob Katz)
 
 ### Overview
-Charsiesis is a **multi-voice chorus/ensemble** effect with per-voice randomized
+CHORwerk is a **multi-voice chorus/ensemble** effect with per-voice randomized
 delay modulation, state-variable filters, envelope following, step sequencer
 modulation, and LFO modulation. 32-bit VST2, single export `main()`.
 

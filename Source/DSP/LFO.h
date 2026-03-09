@@ -5,7 +5,7 @@
 #include <juce_core/juce_core.h>
 
 /**
- * LFO matching original Charsiesis shapes:
+ * LFO matching original CHORwerk shapes:
  * Sine, Ramp, Triangle, Square, Stepping Random, Smooth Random, User (16-point)
  */
 class LFO

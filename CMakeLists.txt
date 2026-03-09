@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(CharsiesiV2 VERSION 2.0.0)
+project(CHORwerk VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,13 +24,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(clap-juce-extensions)
 
 # --- Plugin Target ---
-juce_add_plugin(CharsiesiV2
+juce_add_plugin(CHORwerk
     COMPANY_NAME           "flarkAUDIO"
     PLUGIN_MANUFACTURER_CODE Flrk
-    PLUGIN_CODE            Chr2
+    PLUGIN_CODE            Chr1
     FORMATS                VST3 AU Standalone  # CLAP added via extension
-    PRODUCT_NAME           "Charsiesis"
-    BUNDLE_ID              "com.flarkaudio.charsiesis"
+    PRODUCT_NAME           "CHORwerk v1-0-0"
+    BUNDLE_ID              "com.flarkaudio.chorwerk"
     IS_SYNTH               FALSE
     NEEDS_MIDI_INPUT       FALSE
     NEEDS_MIDI_OUTPUT      FALSE
@@ -43,13 +43,13 @@ juce_add_plugin(CharsiesiV2
 
 # Enable CLAP
 clap_juce_extensions_plugin(
-    TARGET CharsiesiV2
-    CLAP_ID "com.flarkaudio.charsiesis"
+    TARGET CHORwerk
+    CLAP_ID "com.flarkaudio.chorwerk"
     CLAP_FEATURES "audio-effect" "chorus" "multi-voice" "stereo"
 )
 
 # --- Sources ---
-target_sources(CharsiesiV2 PRIVATE
+target_sources(CHORwerk PRIVATE
     # Core
     Source/PluginProcessor.cpp
     Source/PluginProcessor.h
@@ -82,14 +82,14 @@ target_sources(CharsiesiV2 PRIVATE
     Source/UI/PresetBrowser.h
 )
 
-target_compile_definitions(CharsiesiV2 PUBLIC
+target_compile_definitions(CHORwerk PUBLIC
     JUCE_WEB_BROWSER=0
     JUCE_USE_CURL=0
     JUCE_VST3_CAN_REPLACE_VST2=0
     JUCE_DISPLAY_SPLASH_SCREEN=0
 )
 
-target_link_libraries(CharsiesiV2
+target_link_libraries(CHORwerk
     PRIVATE
         juce::juce_audio_utils
         juce::juce_dsp

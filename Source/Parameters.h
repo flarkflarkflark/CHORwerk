@@ -18,6 +18,8 @@ namespace Param
     inline constexpr const char* Rotation           = "rotation";
     inline constexpr const char* Pregain            = "pregain";
     inline constexpr const char* Postgain           = "postgain";
+    inline constexpr const char* PrePhase           = "prePhase";
+    inline constexpr const char* PostPhase          = "postPhase";
 
     // Filters
     inline constexpr const char* Lowpass            = "lowpass";
@@ -58,6 +60,24 @@ namespace Param
     inline constexpr const char* Seq6               = "seq6";
     inline constexpr const char* Seq7               = "seq7";
 
+    // User LFO values (16 points)
+    inline constexpr const char* UserLfo0           = "lfoPoint0";
+    inline constexpr const char* UserLfo1           = "lfoPoint1";
+    inline constexpr const char* UserLfo2           = "lfoPoint2";
+    inline constexpr const char* UserLfo3           = "lfoPoint3";
+    inline constexpr const char* UserLfo4           = "lfoPoint4";
+    inline constexpr const char* UserLfo5           = "lfoPoint5";
+    inline constexpr const char* UserLfo6           = "lfoPoint6";
+    inline constexpr const char* UserLfo7           = "lfoPoint7";
+    inline constexpr const char* UserLfo8           = "lfoPoint8";
+    inline constexpr const char* UserLfo9           = "lfoPoint9";
+    inline constexpr const char* UserLfo10          = "lfoPoint10";
+    inline constexpr const char* UserLfo11          = "lfoPoint11";
+    inline constexpr const char* UserLfo12          = "lfoPoint12";
+    inline constexpr const char* UserLfo13          = "lfoPoint13";
+    inline constexpr const char* UserLfo14          = "lfoPoint14";
+    inline constexpr const char* UserLfo15          = "lfoPoint15";
+
     // Update control
     inline constexpr const char* UpdateUnit         = "updateUnit";
     inline constexpr const char* UpdateQuantize     = "updateQuantize";
@@ -69,15 +89,6 @@ enum class StereoMode  { Free, Slave, AntiSlave, Half };
 enum class FollowMode  { Off, SlowDecay, NormalRate, FastDecay };
 enum class LFOShape    { Sine, Ramp, Triangle, Square, SteppingRandom, SmoothRandom, User };
 
-// Time unit for tempo sync
-enum class TimeUnit
-{
-    Milliseconds, TenMs, Seconds,
-    ThirtySeconds, Sixteenths, Eighths, Quarters,
-    TripletThirtySeconds, TripletSixteenths, TripletEighths, TripletQuarters,
-    QuintupletThirtySeconds, QuintupletSixteenths, QuintupletEighths, QuintupletQuarters
-};
-
 //==============================================================================
 // Parameter layout factory
 //==============================================================================
@@ -85,6 +96,12 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 {
     using namespace juce;
     std::vector<std::unique_ptr<RangedAudioParameter>> params;
+
+    auto formatSyncValue = [](float value, int) {
+        if (std::abs(value - std::round(value)) < 0.001f)
+            return String(static_cast<int>(value));
+        return String(value, 2);
+    };
 
     // --- Voice Engine ---
     params.push_back (std::make_unique<AudioParameterInt>(
@@ -100,7 +117,8 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::RateUpdate, 1 }, "Rate Update",
-        NormalisableRange<float> (0.1f, 100.0f, 0.1f, 0.4f), 10.0f, "units"));
+        NormalisableRange<float> (0.1f, 100.0f, 0.1f, 0.4f), 10.0f, String(),
+        AudioProcessorParameter::genericParameter, formatSyncValue));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::MinDelay, 1 }, "Min Delay",
@@ -125,7 +143,7 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::Rotation, 1 }, "Rotation",
-        NormalisableRange<float> (0.0f, 1.0f, 0.001f), 0.0f, "π"));
+        NormalisableRange<float> (0.0f, 1.0f, 0.001f), 0.0f, "pi"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::Pregain, 1 }, "Pre Gain",
@@ -134,6 +152,12 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::Postgain, 1 }, "Post Gain",
         NormalisableRange<float> (-24.0f, 24.0f, 0.1f), 0.0f, "dB"));
+
+    params.push_back (std::make_unique<AudioParameterBool>(
+        ParameterID { Param::PrePhase, 1 }, "Pre Phase Inv", false));
+
+    params.push_back (std::make_unique<AudioParameterBool>(
+        ParameterID { Param::PostPhase, 1 }, "Post Phase Inv", false));
 
     // --- Filters ---
     params.push_back (std::make_unique<AudioParameterFloat>(
@@ -158,15 +182,15 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
         StringArray { "Off", "Slow Decay", "Normal", "Fast Decay" }, 0));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::EnvLP, 1 }, "Env → LP",
+        ParameterID { Param::EnvLP, 1 }, "Env > LP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::EnvHP, 1 }, "Env → HP",
+        ParameterID { Param::EnvHP, 1 }, "Env > HP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::EnvDelay, 1 }, "Env → Delay",
+        ParameterID { Param::EnvDelay, 1 }, "Env > Delay",
         NormalisableRange<float> (-20.0f, 20.0f, 0.01f), 0.0f, "ms"));
 
     // --- LFO ---
@@ -177,7 +201,8 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::LFORate, 1 }, "LFO Rate",
-        NormalisableRange<float> (0.01f, 100.0f, 0.01f, 0.3f), 1.0f, "units"));
+        NormalisableRange<float> (0.01f, 100.0f, 0.01f, 0.3f), 1.0f, String(),
+        AudioProcessorParameter::genericParameter, formatSyncValue));
 
     params.push_back (std::make_unique<AudioParameterChoice>(
         ParameterID { Param::LFOUnit, 1 }, "LFO Unit",
@@ -190,16 +215,26 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
         ParameterID { Param::LFOQuant, 1 }, "LFO Quantize", false));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::LFOLP, 1 }, "LFO → LP",
+        ParameterID { Param::LFOLP, 1 }, "LFO > LP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::LFOHP, 1 }, "LFO → HP",
+        ParameterID { Param::LFOHP, 1 }, "LFO > HP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::LFODelay, 1 }, "LFO → Delay",
+        ParameterID { Param::LFODelay, 1 }, "LFO > Delay",
         NormalisableRange<float> (-20.0f, 20.0f, 0.01f), 0.0f, "ms"));
+
+    // --- User LFO Waveform ---
+    for (int i = 0; i < 16; ++i)
+    {
+        auto id = "lfoPoint" + std::to_string (i);
+        auto name = "LFO Point " + std::to_string (i);
+        params.push_back (std::make_unique<AudioParameterFloat>(
+            ParameterID { id, 1 }, name,
+            NormalisableRange<float> (0.0f, 1.0f, 0.001f), 0.5f));
+    }
 
     // --- Step Sequencer ---
     for (int i = 0; i < 8; ++i)
@@ -213,7 +248,8 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 
     params.push_back (std::make_unique<AudioParameterFloat>(
         ParameterID { Param::SeqStep, 1 }, "Seq Step",
-        NormalisableRange<float> (0.01f, 100.0f, 0.01f, 0.3f), 1.0f, "units"));
+        NormalisableRange<float> (0.01f, 100.0f, 0.01f, 0.3f), 1.0f, String(),
+        AudioProcessorParameter::genericParameter, formatSyncValue));
 
     params.push_back (std::make_unique<AudioParameterChoice>(
         ParameterID { Param::SeqUnit, 1 }, "Seq Unit",
@@ -226,15 +262,15 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
         ParameterID { Param::SeqQuant, 1 }, "Seq Quantize", false));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::SeqLP, 1 }, "Seq → LP",
+        ParameterID { Param::SeqLP, 1 }, "Seq > LP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::SeqHP, 1 }, "Seq → HP",
+        ParameterID { Param::SeqHP, 1 }, "Seq > HP",
         NormalisableRange<float> (-4.0f, 4.0f, 0.01f), 0.0f, "oct"));
 
     params.push_back (std::make_unique<AudioParameterFloat>(
-        ParameterID { Param::SeqDelay, 1 }, "Seq → Delay",
+        ParameterID { Param::SeqDelay, 1 }, "Seq > Delay",
         NormalisableRange<float> (-20.0f, 20.0f, 0.01f), 0.0f, "ms"));
 
     // --- Update Control ---

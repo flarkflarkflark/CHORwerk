@@ -17,6 +17,8 @@ public:
         startTimerHz (30);  // 30 FPS animation
     }
 
+    void setTooltip (const juce::String& text) { tooltipText = text; }
+
     void paint (juce::Graphics& g) override
     {
         auto bounds = getLocalBounds().toFloat();
@@ -24,7 +26,7 @@ public:
         // Background
         g.setColour (juce::Colour (0xff070e17));
         g.fillRoundedRectangle (bounds, 6.0f);
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::border));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::border));
         g.drawRoundedRectangle (bounds, 6.0f, 1.0f);
 
         auto area = bounds.reduced (2.0f);
@@ -59,6 +61,7 @@ public:
         };
 
         int numVoices = chorusEngine.getActiveVoices();
+        float env = chorusEngine.getEnvelopeLevel();
         float time = animTime;
 
         for (int v = 0; v < numVoices; ++v)
@@ -69,14 +72,19 @@ public:
             juce::Path path;
             auto color = voiceColors[v % 8];
 
+            // Increase base line "activity" and make it react to audio input (env)
+            float baseAmp = 12.0f + normDelay * (h * 0.45f);
+            float audioWiggle = env * 25.0f; // Extra wiggle when audio is loud
+
             for (int px = 0; px < static_cast<int> (w); ++px)
             {
                 float xn = static_cast<float> (px) / w;
-                // Animate: combine voice delay with time-based sine
-                float y = cy + std::sin (xn * 6.0f + time * (0.8f + v * 0.15f)) *
-                           (10.0f + normDelay * (h * 0.35f)) +
-                           std::sin (xn * 12.0f + time * 1.7f + static_cast<float> (v)) *
-                           5.0f * normDelay;
+                
+                // Animate: combine voice delay with time-based sine and envelope-based jitter
+                float y = cy + std::sin (xn * (6.0f + env * 4.0f) + time * (0.8f + v * 0.15f)) *
+                           (baseAmp + audioWiggle) +
+                           std::sin (xn * 12.0f + time * 2.5f + static_cast<float> (v)) *
+                           (5.0f * normDelay + audioWiggle * 0.5f);
 
                 y = juce::jlimit (area.getY() + 2.0f, area.getBottom() - 2.0f, y);
 
@@ -91,7 +99,7 @@ public:
         }
 
         // Voice count label
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::textDim));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::textDim));
         g.setFont (juce::Font ("JetBrains Mono", 9.0f, juce::Font::plain));
         g.drawText (juce::String (numVoices) + " voices",
                     area.reduced (6.0f), juce::Justification::topRight);
@@ -106,6 +114,7 @@ private:
 
     ChorusEngine& chorusEngine;
     float animTime = 0.0f;
+    juce::String tooltipText;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveformDisplay)
 };
@@ -123,12 +132,14 @@ public:
         startTimerHz (24);
     }
 
+    void setTooltip (const juce::String& text) { tooltipText = text; }
+
     void paint (juce::Graphics& g) override
     {
         auto bounds = getLocalBounds().toFloat();
         g.setColour (juce::Colour (0xff070e17));
         g.fillRoundedRectangle (bounds, 4.0f);
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::border));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::border));
         g.drawRoundedRectangle (bounds, 4.0f, 1.0f);
 
         auto area = bounds.reduced (3.0f);
@@ -158,12 +169,12 @@ public:
                 path.lineTo (area.getX() + static_cast<float> (px), y);
         }
 
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::lfo));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::lfo));
         g.strokePath (path, juce::PathStrokeType (1.5f));
 
         // Phase indicator (vertical line at current LFO phase)
         float phaseX = area.getX() + lfo.getPhase() * w;
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::lfo).withAlpha (0.4f));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::lfo).withAlpha (0.4f));
         g.drawVerticalLine (static_cast<int> (phaseX), area.getY(), area.getBottom());
     }
 
@@ -183,13 +194,14 @@ private:
             case 3: return (p < 0.5f) ? 1.0f : -1.0f;                                   // Square
             case 4: return (std::sin (p * 13.7f) > 0) ? 0.8f : -0.8f;                   // Stepping random (approx)
             case 5: return std::sin (p * 3.0f) * std::cos (p * 7.3f);                   // Smooth random (approx)
-            case 6: return std::sin (p * juce::MathConstants<float>::twoPi);             // User (show sine as fallback)
+            case 6: return chorusEngine.getLFO().getCurrentValue();                     // User (actual LFO evaluation)
             default: return 0.0f;
         }
     }
 
     ChorusEngine& chorusEngine;
     int currentShape = 0;
+    juce::String tooltipText;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LFODisplay)
 };
@@ -207,6 +219,8 @@ public:
         startTimerHz (20);
     }
 
+    void setTooltip (const juce::String& text) { tooltipText = text; }
+
     void paint (juce::Graphics& g) override
     {
         auto bounds = getLocalBounds().toFloat();
@@ -214,19 +228,21 @@ public:
         g.fillRoundedRectangle (bounds, 3.0f);
 
         float level = chorusEngine.getEnvelopeLevel();
-        smoothedLevel += (level - smoothedLevel) * 0.3f;
+        // Logarithmic scaling for better visibility of low levels
+        float displayLevel = std::pow (level, 0.5f);
+        smoothedLevel += (displayLevel - smoothedLevel) * 0.25f;
 
         auto fillBounds = bounds;
         fillBounds.setHeight (bounds.getHeight() * smoothedLevel);
         fillBounds.setY (bounds.getBottom() - fillBounds.getHeight());
 
-        auto color = juce::Colour (CharsiesiLookAndFeel::Colors::envelope);
+        auto color = juce::Colour (CHORwerkLookAndFeel::Colors::envelope);
         g.setGradientFill (juce::ColourGradient (
             color.withAlpha (0.3f), 0, fillBounds.getBottom(),
             color.withAlpha (0.8f), 0, fillBounds.getY(), false));
         g.fillRoundedRectangle (fillBounds, 3.0f);
 
-        g.setColour (juce::Colour (CharsiesiLookAndFeel::Colors::border));
+        g.setColour (juce::Colour (CHORwerkLookAndFeel::Colors::border));
         g.drawRoundedRectangle (bounds, 3.0f, 1.0f);
     }
 
@@ -234,6 +250,7 @@ private:
     void timerCallback() override { repaint(); }
     ChorusEngine& chorusEngine;
     float smoothedLevel = 0.0f;
+    juce::String tooltipText;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EnvelopeMeter)
 };

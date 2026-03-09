@@ -8,27 +8,29 @@
 #include "UI/StepSequencerComponent.h"
 #include "UI/SectionComponent.h"
 
-class CharsiesiEditor : public juce::AudioProcessorEditor,
+class CHORwerkEditor : public juce::AudioProcessorEditor,
                         private juce::Timer
 {
 public:
-    explicit CharsiesiEditor (CharsiesiProcessor& p);
-    ~CharsiesiEditor() override;
+    explicit CHORwerkEditor (CHORwerkProcessor& p);
+    ~CHORwerkEditor() override;
 
     void paint (juce::Graphics& g) override;
     void resized() override;
 
+    void setScale (float newScale);
+
 private:
     void timerCallback() override;
-    void layoutSection (juce::Rectangle<int>& area, SectionComponent& section,
-                        std::initializer_list<juce::Component*> children,
-                        int rows, int cols);
 
-    CharsiesiProcessor& processor;
-    CharsiesiLookAndFeel lookAndFeel;
+    CHORwerkProcessor& processor;
+    CHORwerkLookAndFeel lookAndFeel;
+    juce::TooltipWindow tooltipWindow { this };
 
-    static constexpr int baseWidth = 760;
-    static constexpr int baseHeight = 520;
+    float currentScale = 1.0f;
+
+    static constexpr int baseWidth = 860;
+    static constexpr int baseHeight = 640;
 
     //==========================================================================
     // Header
@@ -47,16 +49,18 @@ private:
     //==========================================================================
     // MIDDLE ROW: Rate, Delay, Filter
     //==========================================================================
-    SectionComponent rateSection, delaySection, filterSection;
+    SectionComponent rateSection;
     KnobComponent minRateKnob, rateRangeKnob, rateUpdateKnob;
     ToggleComponent quantizeTgl;
+    SectionComponent delaySection;
     KnobComponent minDelayKnob, delayRangeKnob;
+    SectionComponent filterSection;
     KnobComponent lowpassKnob, lpResKnob, highpassKnob, hpResKnob;
 
     //==========================================================================
     // BOTTOM ROW: Step Seq, Envelope, LFO
     //==========================================================================
-    SectionComponent seqSection, envSection, lfoSection;
+    SectionComponent seqSection;
 
     // Step Sequencer
     StepSequencerComponent stepSeqDisplay;
@@ -65,11 +69,13 @@ private:
     ToggleComponent seqQuantTgl;
 
     // Envelope
+    SectionComponent envSection;
     KnobComponent envLPKnob, envHPKnob, envDelayKnob;
     DropdownComponent followModeDrop;
     EnvelopeMeter envMeter;
 
     // LFO
+    SectionComponent lfoSection;
     KnobComponent lfoRateKnob;
     DropdownComponent lfoShapeDrop, lfoUnitDrop;
     ToggleComponent lfoQuantTgl;
@@ -88,5 +94,5 @@ private:
     // Gain controls
     KnobComponent pregainKnob, postgainKnob;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CharsiesiEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CHORwerkEditor)
 };

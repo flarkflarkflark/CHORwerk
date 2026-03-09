@@ -56,7 +56,7 @@ public:
     {
         auto b = getLocalBounds().toFloat();
         float stepW = b.getWidth() / static_cast<float> (NumSteps);
-        auto color = juce::Colour (CharsiesiLookAndFeel::Colors::stepSeq);
+        auto color = juce::Colour (CHORwerkLookAndFeel::Colors::stepSeq);
 
         int currentStep = chorusEngine.getSequencer().getCurrentStep();
 

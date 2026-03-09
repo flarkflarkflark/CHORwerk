@@ -4,7 +4,7 @@
 #include <functional>
 
 /**
- * Preset Manager for Charsiesis v2.
+ * Preset Manager for CHORwerk v2.
  *
  * Handles:
  * - Factory presets (embedded, read-only)
@@ -15,7 +15,7 @@
  * - Undo on preset change (stores previous state)
  *
  * Preset file format: XML with all APVTS parameter IDs as attributes.
- * User presets stored in: <AppData>/flarkAUDIO/Charsiesis/Presets/
+ * User presets stored in: <AppData>/flarkAUDIO/CHORwerk/Presets/
  */
 class PresetManager
 {

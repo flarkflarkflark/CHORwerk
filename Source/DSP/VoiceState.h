@@ -14,10 +14,11 @@ struct VoiceState
     float targetDelay = 2.0f;        // Target delay after randomization
     float delayVelocity = 0.0f;      // Rate of delay change (ms/s)
 
-    // Random modulation
-    float currentRate = 1.0f;        // Current modulation rate (ms/s)
-    float targetRate = 1.0f;         // Target rate after update
-    float ratePhase = 0.0f;          // Phase within current rate cycle
+    // Random modulation (velocity-based wanderer)
+    float currentRate = 1.0f;        // Current speed in ms/s
+    float targetRate = 1.0f;         // Target speed after update
+    float rateDirection = 1.0f;      // 1 or -1
+    float ratePhase = 0.0f;          // unused in velocity mode, keeping for LFO if needed
 
     // Filter
     StateVariableFilter filter;

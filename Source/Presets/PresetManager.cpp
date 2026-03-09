@@ -69,7 +69,7 @@ juce::File PresetManager::getUserPresetsDirectory() const
 {
     auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory)
                    .getChildFile ("flarkAUDIO")
-                   .getChildFile ("Charsiesis")
+                   .getChildFile ("CHORwerk")
                    .getChildFile ("Presets");
 
     if (! dir.exists())
@@ -317,12 +317,12 @@ bool PresetManager::saveUserPreset (const juce::String& name,
     if (name.isEmpty()) return false;
 
     // Create XML
-    auto xml = std::make_unique<juce::XmlElement> ("CharsiesiPreset");
+    auto xml = std::make_unique<juce::XmlElement> ("CHORwerkPreset");
     xml->setAttribute ("name", name);
     xml->setAttribute ("author", author.isEmpty() ? "User" : author);
     xml->setAttribute ("category", category.isEmpty() ? "User" : category);
     xml->setAttribute ("description", description);
-    xml->setAttribute ("version", "2.0");
+    xml->setAttribute ("version", "1.0");
 
     // Capture current parameter state
     auto state = captureCurrentState();
@@ -430,34 +430,36 @@ void PresetManager::storeB()
 
 void PresetManager::recallA()
 {
-    if (stateA.isValid())
-    {
-        applyPresetToAPVTS (stateA);
-        showingA = true;
-        notifyListeners();
-    }
+    if (! stateA.isValid())
+        stateA = captureCurrentState();
+
+    applyPresetToAPVTS (stateA);
+    showingA = true;
+    notifyListeners();
 }
 
 void PresetManager::recallB()
 {
-    if (stateB.isValid())
-    {
-        applyPresetToAPVTS (stateB);
-        showingA = false;
-        notifyListeners();
-    }
+    if (! stateB.isValid())
+        stateB = captureCurrentState();
+
+    applyPresetToAPVTS (stateB);
+    showingA = false;
+    notifyListeners();
 }
 
 void PresetManager::toggleAB()
 {
+    auto currentState = captureCurrentState();
+    
     if (showingA)
     {
-        stateA = captureCurrentState();
+        stateA = currentState;
         recallB();
     }
     else
     {
-        stateB = captureCurrentState();
+        stateB = currentState;
         recallA();
     }
 }
@@ -484,8 +486,8 @@ bool PresetManager::importPreset (const juce::File& file)
     auto xml = juce::parseXML (file);
     if (xml == nullptr) return false;
 
-    // Validate it's a Charsiesis preset
-    if (xml->getTagName() != "CharsiesiPreset" && xml->getChildByName ("Params") == nullptr)
+    // Validate it's a CHORwerk preset
+    if (xml->getTagName() != "CHORwerkPreset" && xml->getChildByName ("Params") == nullptr)
         return false;
 
     // Copy to user presets directory
@@ -511,12 +513,12 @@ bool PresetManager::exportPreset (int index, const juce::File& destination)
 
     auto& info = allPresets[static_cast<size_t> (index)];
 
-    auto xml = std::make_unique<juce::XmlElement> ("CharsiesiPreset");
+    auto xml = std::make_unique<juce::XmlElement> ("CHORwerkPreset");
     xml->setAttribute ("name", info.name);
     xml->setAttribute ("author", info.author);
     xml->setAttribute ("category", info.category);
     xml->setAttribute ("description", info.description);
-    xml->setAttribute ("version", "2.0");
+    xml->setAttribute ("version", "1.0");
 
     auto& state = presetStates[static_cast<size_t> (index)];
     auto paramsElem = xml->createNewChildElement ("Params");

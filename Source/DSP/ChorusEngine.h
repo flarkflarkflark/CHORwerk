@@ -12,7 +12,7 @@
 #include "../Parameters.h"
 
 /**
- * Core Charsiesis multi-voice chorus engine.
+ * Core CHORwerk multi-voice chorus engine.
  *
  * Architecture (reverse-engineered from original DLL):
  *
@@ -98,6 +98,24 @@ private:
     StereoMode stereoMode = StereoMode::Free;
     FollowMode followMode = FollowMode::Off;
     bool updateOnCollision = false;
+
+    // Safety
+    static inline float sanitize (float v) 
+    {
+        if (! std::isfinite (v)) return 0.0f;
+        return std::clamp (v, -2.0f, 2.0f); 
+    }
+
+    static inline float softClip (float x)
+    {
+        if (x <= -1.0f) return -1.0f;
+        if (x >= 1.0f) return 1.0f;
+        return x - (x * x * x) / 3.0f;
+    }
+
+    // Pre-allocated wet buffer
+    juce::AudioBuffer<float> wetBuffer;
+    float lastWetL = 0.0f, lastWetR = 0.0f;
 
     // Modulation depths
     float envToLP = 0.0f, envToHP = 0.0f, envToDelay = 0.0f;

@@ -4,10 +4,10 @@
 #include "DSP/ChorusEngine.h"
 #include "Presets/PresetManager.h"
 
-class CharsiesiProcessor : public juce::AudioProcessor
+class CHORwerkProcessor : public juce::AudioProcessor
 {
 public:
-    CharsiesiProcessor()
+    CHORwerkProcessor()
         : AudioProcessor (BusesProperties()
                           .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
                           .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
@@ -15,7 +15,7 @@ public:
     {
     }
 
-    ~CharsiesiProcessor() override = default;
+    ~CHORwerkProcessor() override = default;
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override
     {
@@ -46,13 +46,26 @@ public:
     void processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&) override
     {
         juce::ScopedNoDenormals noDenormals;
+        
+        const int numChannels = buffer.getNumChannels();
+        const int numSamples = buffer.getNumSamples();
+        
+        if (numSamples <= 0 || numChannels <= 0)
+            return;
+            
         chorusEngine.process (buffer, getPlayHead(), apvts);
+        
+        // Ensure any additional channels are cleared (e.g. if host gives 4 channels for a stereo plugin)
+        for (int i = 2; i < numChannels; ++i)
+            buffer.clear (i, 0, numSamples);
     }
+
+    using juce::AudioProcessor::processBlock;
 
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override { return true; }
 
-    const juce::String getName() const override { return "Charsiesis"; }
+    const juce::String getName() const override { return "CHORwerk v1.0.0"; }
     bool acceptsMidi() const override { return false; }
     bool producesMidi() const override { return false; }
     double getTailLengthSeconds() const override { return 0.05; }  // ~50ms max delay
@@ -86,5 +99,5 @@ private:
     PresetManager presetManager { apvts };
     bool presetsInitialized = false;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CharsiesiProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CHORwerkProcessor)
 };

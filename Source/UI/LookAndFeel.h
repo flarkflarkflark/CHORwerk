@@ -2,17 +2,14 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 /**
- * Dark/modern LookAndFeel for Charsiesis v2.
- * Color scheme: deep navy background, mint/teal accents,
- * with per-section color coding.
+ * Dark/modern LookAndFeel for CHORwerk v2.
  */
-class CharsiesiLookAndFeel : public juce::LookAndFeel_V4
+class CHORwerkLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    CharsiesiLookAndFeel();
-    ~CharsiesiLookAndFeel() override = default;
+    CHORwerkLookAndFeel();
+    ~CHORwerkLookAndFeel() override = default;
 
-    // Colour palette
     struct Colors
     {
         static constexpr juce::uint32 background    = 0xff080e18;
@@ -23,40 +20,39 @@ public:
         static constexpr juce::uint32 textSecondary = 0xff8b9caa;
         static constexpr juce::uint32 textDim       = 0xff475569;
 
-        // Section accent colors
-        static constexpr juce::uint32 voices   = 0xff6ee7b7;  // Mint green
-        static constexpr juce::uint32 rate     = 0xff38bdf8;  // Sky blue
-        static constexpr juce::uint32 delay    = 0xffa78bfa;  // Violet
-        static constexpr juce::uint32 filter   = 0xfff472b6;  // Pink
-        static constexpr juce::uint32 feedback = 0xfffb923c;  // Orange
-        static constexpr juce::uint32 stepSeq  = 0xfffacc15;  // Yellow
-        static constexpr juce::uint32 envelope = 0xff34d399;  // Emerald
-        static constexpr juce::uint32 lfo      = 0xffa78bfa;  // Violet (same as delay)
+        static constexpr juce::uint32 voices   = 0xff6ee7b7;
+        static constexpr juce::uint32 rate     = 0xff38bdf8;
+        static constexpr juce::uint32 delay    = 0xffa78bfa;
+        static constexpr juce::uint32 filter   = 0xfff472b6;
+        static constexpr juce::uint32 feedback = 0xfffb923c;
+        static constexpr juce::uint32 stepSeq  = 0xfffacc15;
+        static constexpr juce::uint32 envelope = 0xff34d399;
+        static constexpr juce::uint32 lfo      = 0xffa78bfa;
     };
 
-    // Knob drawing
     void drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height,
                            float sliderPos, float rotaryStartAngle, float rotaryEndAngle,
                            juce::Slider& slider) override;
 
-    // Toggle button (checkbox style)
     void drawToggleButton (juce::Graphics& g, juce::ToggleButton& button,
                            bool shouldDrawButtonAsHighlighted,
                            bool shouldDrawButtonAsDown) override;
 
-    // ComboBox
     void drawComboBox (juce::Graphics& g, int width, int height, bool isButtonDown,
                        int buttonX, int buttonY, int buttonW, int buttonH,
                        juce::ComboBox& box) override;
 
-    // Linear slider (for horizontal sliders)
     void drawLinearSlider (juce::Graphics& g, int x, int y, int width, int height,
                            float sliderPos, float minSliderPos, float maxSliderPos,
                            juce::Slider::SliderStyle style, juce::Slider& slider) override;
 
-    /** Set the accent color for the next component being drawn. */
+    juce::Font getPopupMenuFont() override;
+    juce::Font getComboBoxFont (juce::ComboBox&) override;
+
     void setAccentColour (juce::Colour c) { currentAccent = c; }
+    void setScale (float s) { currentScale = s; }
 
 private:
     juce::Colour currentAccent { Colors::voices };
+    float currentScale = 1.0f;
 };
