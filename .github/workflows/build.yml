@@ -17,13 +17,10 @@ jobs:
         include:
           - name: Linux
             os: ubuntu-22.04
-            artifact-path: build/CHORwerk v1-0-0_artefacts/Release
           - name: macOS
-            os: macos-latest
-            artifact-path: build/CHORwerk v1-0-0_artefacts/Release
+            os: macos-14
           - name: Windows
-            os: windows-latest
-            artifact-path: build/CHORwerk v1-0-0_artefacts/Release
+            os: windows-2022
 
     steps:
       - name: Checkout code
