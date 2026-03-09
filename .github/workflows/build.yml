@@ -51,7 +51,6 @@ jobs:
           find build -name "*.vst3" -exec cp -r {} dist/ \;
           find build -name "*.clap" -exec cp -r {} dist/ \;
           find build -name "*.component" -exec cp -r {} dist/ \;
-          # Standalone (Linux/Mac)
           find build -path "*/Standalone/*" -type f -not -name "*.*" -exec cp {} dist/ \; || true
 
       - name: Stage Artifacts (Windows)
@@ -70,3 +69,34 @@ jobs:
         with:
           name: CHORwerk-${{ matrix.name }}
           path: dist/
+
+  release:
+    name: Create GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Zip Artifacts (Linux)
+        run: zip -r CHORwerk-Linux.zip artifacts/CHORwerk-Linux/*
+      
+      - name: Zip Artifacts (macOS)
+        run: zip -r CHORwerk-macOS.zip artifacts/CHORwerk-macOS/*
+
+      - name: Zip Artifacts (Windows)
+        run: zip -r CHORwerk-Windows.zip artifacts/CHORwerk-Windows/*
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            CHORwerk-Linux.zip
+            CHORwerk-macOS.zip
+            CHORwerk-Windows.zip
+          body_path: README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
