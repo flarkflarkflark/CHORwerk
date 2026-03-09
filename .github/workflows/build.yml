@@ -50,9 +50,9 @@ jobs:
         with:
           name: CHORwerk-Linux
           path: |
-            build/CHORwerk v1-0-0_artefacts/Release/VST3/*.vst3
-            build/CHORwerk v1-0-0_artefacts/Release/CLAP/*.clap
-            build/CHORwerk v1-0-0_artefacts/Release/Standalone/*
+            build/**/VST3/*.vst3
+            build/**/CLAP/*.clap
+            build/**/Standalone/*
 
       - name: Upload Artifacts (macOS)
         if: matrix.name == 'macOS'
@@ -60,10 +60,10 @@ jobs:
         with:
           name: CHORwerk-macOS
           path: |
-            build/CHORwerk v1-0-0_artefacts/Release/VST3/*.vst3
-            build/CHORwerk v1-0-0_artefacts/Release/CLAP/*.clap
-            build/CHORwerk v1-0-0_artefacts/Release/AU/*.component
-            build/CHORwerk v1-0-0_artefacts/Release/Standalone/*
+            build/**/VST3/*.vst3
+            build/**/CLAP/*.clap
+            build/**/AU/*.component
+            build/**/Standalone/*
 
       - name: Upload Artifacts (Windows)
         if: matrix.name == 'Windows'
@@ -71,6 +71,6 @@ jobs:
         with:
           name: CHORwerk-Windows
           path: |
-            build/CHORwerk v1-0-0_artefacts/Release/VST3/*.vst3
-            build/CHORwerk v1-0-0_artefacts/Release/CLAP/*.clap
-            build/CHORwerk v1-0-0_artefacts/Release/Standalone/*.exe
+            build/**/Release/VST3/*.vst3
+            build/**/Release/CLAP/*.clap
+            build/**/Release/Standalone/*.exe
